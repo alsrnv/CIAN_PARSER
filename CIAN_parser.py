@@ -93,104 +93,175 @@ def extract_minutes(flat_page):
 
 
 
-
-
-
-def extract_values(flat_page,type):
-    tag = flat_page.find_all('table', attrs={'class':'object_descr_props flat sale'})
-    tag_text = tag[0]
-    for item in tag_text.find_all('tr'):
-        if 'Жилая площадь'.decode('utf-8') in item.text:
+def get_Livesp(flat_page):
+    try:
+        tag = flat_page.find_all('table', attrs={'class':'object_descr_props flat sale'})
+        tag_text = tag[0]
+        for item in tag_text.find_all('tr'):
             try:
-                item_td = item.find('td')
-                item_td_separated = item_td.text.split()
-                Livesp = item_td_separated[0]
-                #Livesp = float(item_td_separated[0].replace(",", "."))
+                if 'Жилая площадь'.decode('utf-8') in item.text:
+                    item_td = item.find('td')
+                    item_td_separated = item_td.text.split()
+                    Livesp = item_td_separated[0]
             except:
                 Livesp = -99
 
 
 
 
-        if 'Общая площадь'.decode('utf-8') in item.text:
+    except:
+        Livesp = -99
+    return Livesp
+
+def get_Totsp(flat_page):
+    try:
+        tag = flat_page.find_all('table', attrs={'class':'object_descr_props flat sale'})
+        tag_text = tag[0]
+        for item in tag_text.find_all('tr'):
             try:
-                item_td = item.find('td')
-                item_td_separated = item_td.text.split()
-                Totsp= item_td_separated[0]
-                # Totsp = float(item_td_separated[0].replace(",", "."))
+                if 'Общая площадь'.decode('utf-8') in item.text:
+                    item_td = item.find('td')
+                    item_td_separated = item_td.text.split()
+                    Totsp= item_td_separated[0]
             except:
                 Totsp = -99
 
-        if 'Площадь кухни'.decode('utf-8') in item.text:
+    except:
+        Totsp = -99
+    return Totsp
+
+def get_Kitsp(flat_page):
+    try:
+        tag = flat_page.find_all('table', attrs={'class':'object_descr_props flat sale'})
+        tag_text = tag[0]
+        for item in tag_text.find_all('tr'):
             try:
-                item_td = item.find('td')
-                item_td_separated = item_td.text.split()
-                Kitsp = item_td_separated[0]
-                # Kitsp = float(item_td_separated[0].replace(",", "."))
+                if 'Площадь кухни'.decode('utf-8') in item.text:
+                    item_td = item.find('td')
+                    item_td_separated = item_td.text.split()
+                    Kitsp = item_td_separated[0]
             except:
                 Kitsp = -99
 
 
-        if 'Этаж'.decode('utf-8') in item.text:
+
+
+
+
+    except:
+        Kitsp = -99
+    return Kitsp
+
+def get_Floor(flat_page):
+    Floor =''
+    try:
+        tag = flat_page.find_all('table', attrs={'class':'object_descr_props flat sale'})
+        tag_text = tag[0]
+        for item in tag_text.find_all('tr'):
             try:
-                item_td = item.find('td')
-                item_td_separated = item_td.text.split('/')
-                Floor = int(item_td_separated[0].strip())
-                Nfloors = int(item_td_separated[1].strip())
+                if 'Этаж'.decode('utf-8') in item.text:
+                    item_td = item.find('td')
+                    item_td_separated = item_td.text.split('/')
+                    Floor = int(item_td_separated[0].strip())
             except:
-                Floor = int(item_td.text.strip())
-                Nfloors = -99
+                Floor = -99
 
 
 
 
+    except:
+        Floor = -99
+    return Floor
 
-        if 'Тип дома'.decode('utf-8') in item.text:
+def get_Nfloors(flat_page):
+    Nfloors = ''
+    try:
+        tag = flat_page.find_all('table', attrs={'class':'object_descr_props flat sale'})
+        tag_text = tag[0]
+        for item in tag_text.find_all('tr'):
+            try:
+                if 'Этаж'.decode('utf-8') in item.text:
                     item_td = item.find('td')
-                    if 'новос'.decode('utf-8') in item_td.text:
-                        New = 1
-                    else:
-                        New = 0
-        else:
-            New =0
-        if 'Тип дома'.decode('utf-8') in item.text:
+                    item_td_separated = item_td.text.split('/')
+                    Nfloors = int(item_td_separated[1].strip())
+            except:
+                Nfloors=-99
+
+    except:
+        Nfloors = -99
+    return Nfloors
+
+def get_New(flat_page):
+    try:
+        tag = flat_page.find_all('table', attrs={'class':'object_descr_props flat sale'})
+        tag_text = tag[0]
+        for item in tag_text.find_all('tr'):
+            try:
+                if 'Тип дома'.decode('utf-8') in item.text:
                     item_td = item.find('td')
 
-                    if 'кир'.decode('utf-8') or 'мон'.decode('utf-8') or 'жб'.decode('utf-8') in item_td.text:
-                        Brick = 1
-                    else:
-                        Brick = 0
-        else:
-            Brick =0
-        if 'Телефон'.decode('utf-8') in item.text:
+                if 'новос'.decode('utf-8') in item_td.text:
+                    New = 1
+                else:
+                    New = 0
+            except:
+                New = -99
+
+
+    except:
+        New = -99
+    return New
+
+def get_Brick(flat_page):
+    try:
+        tag = flat_page.find_all('table', attrs={'class':'object_descr_props flat sale'})
+        tag_text = tag[0]
+        for item in tag_text.find_all('tr'):
+            try:
+                if 'Тип дома'.decode('utf-8') in item.text:
                     item_td = item.find('td')
+
+
+                if 'кир'.decode('utf-8') or 'мон'.decode('utf-8') or 'жб'.decode('utf-8') in item_td.text:
+                    Brick = 1
+                else:
+                    Brick = 0
+
+            except:
+                Brick = -99
+
+
+    except:
+        Brick = -99
+    return Brick
+
+
+def get_Tel(flat_page):
+    Tel = ''
+    try:
+        tag = flat_page.find_all('table', attrs={'class':'object_descr_props flat sale'})
+        tag_text = tag[0]
+
+        try:
+            for item in tag_text.find_all('tr'):
+                if 'Телефон'.decode('utf-8') in item.text:
+                    item_td = item.find('td')
+
                     if 'нет'.decode('utf-8') in item_td.text:
                         Tel = 0
+
+
                     else:
                         Tel = 1
-        else:
-            Tel = 0
+
+        except:
+            Tel = -99
 
 
 
-    if type == 'Tel':
-        return Tel
-    elif type=='Brick':
-        return Brick
-    elif type =='New':
-        return New
-    elif type =='Floor':
-        return Floor
-    elif type =='Nfloors':
-        return Nfloors
-    elif type=='Kitsp':
-        return Kitsp
-    elif type =='Totsp':
-        return Totsp
-    elif type =='Livesp':
-        return Livesp
-    else:
-        return -99
+    except:
+        Tel = -99
+    return Tel
 
 moscow_center = (55.754093,37.620407) #55.754093, 37.620407
 
@@ -250,13 +321,14 @@ for id,district in districts.items():
         flatStats['Price'] = getPrice(flat_page)
         flatStats['lat'], flatStats['lon'] = getCoords(flat_page)
         flatStats['rooms'] = getRoom(flat_page)
-        flatStats['Livesp'] = extract_values(flat_page,'Livesp')
-        flatStats['Totsp'] = extract_values(flat_page,'Totsp')
-        flatStats['Nfloors'] = extract_values(flat_page,'Nfloors')
-        flatStats['Floor'] = extract_values(flat_page,'Floor')
-        flatStats['New'] = extract_values(flat_page,'New')
-        flatStats['Brick'] = extract_values(flat_page,'Brick')
-        flatStats['Tel'] = extract_values(flat_page,'Tel')
+        flatStats['Livesp'] = get_Livesp(flat_page)
+        flatStats['Totsp'] = get_Totsp(flat_page)
+
+        flatStats['Floor'] = get_Floor(flat_page)
+        flatStats['Nfloors'] = get_Nfloors(flat_page)
+        flatStats['New'] = get_New(flat_page)
+        flatStats['Brick'] = get_Brick(flat_page)
+        flatStats['Tel'] = get_Tel(flat_page)
         flatStats['MetrDist'] = extract_minutes(flat_page)
         flatStats['Walk'] = extract_walk(flat_page)
         flatStats['Dist'] =  1.60934*vincenty(moscow_center,(flatStats['lat'],flatStats['lon']),miles=True)  #moscow_center.distance(Latlon(Latitude(flatStats['lat']), Longitude(flatStats['lon'])))
